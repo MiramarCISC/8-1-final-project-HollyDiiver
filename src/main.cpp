@@ -1,14 +1,14 @@
 #include "project.hpp"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 int main() {
     int choice = -1;
 
-    cout << "CISC 192 Final Project Sample" << endl;
-    cout << "Sample code is provided only as an example." << endl;
-    cout << "Delete or replace the sample code before final submission." << endl;
+    cout << "Library Tracker" << endl;
+    cout << "A simple project for organizing and reviewing books." << endl;
 
     do {
         printMenu();
@@ -21,64 +21,45 @@ int main() {
 
         switch (choice) {
             case 1: {
-                Student student("A123", "Alex");
-                student.getScoreList().addScore(90.0);
-                student.getScoreList().addScore(80.0);
-                student.getScoreList().addScore(100.0);
-                student.getScoreList().sortAscending();
+                BookShelf shelf;
+                shelf.addBook(Book("Dune", "Herbert", 1965, 5));
+                shelf.addBook(Book("1984", "Orwell", 1949, 5));
+                shelf.addBook(Book("Frankenstein", "Shelley", 1818, 4));
 
-                printStudent(student);
-                cout << "Score 100 found at index "
-                     << student.getScoreList().findScore(100.0)
-                     << endl;
-
+                cout << "Sample shelf contents:" << endl;
+                for (int i = 0; i < shelf.getCount(); i++) {
+                    printBook(shelf.getBookAt(i));
+                }
                 break;
             }
 
             case 2: {
-                TaskList tasks;
-                tasks.insertFront(Task("study", 5));
-                tasks.insertFront(Task("project", 4));
-                tasks.markTaskComplete("study");
+                ReadingList list;
+                list.insertFront(Book("Dune", "Herbert", 1965, 5));
+                list.insertFront(Book("1984", "Orwell", 1949, 5));
 
-                cout << "Task count: " << tasks.countTasks() << endl;
-                cout << "Removed completed tasks: "
-                     << tasks.removeCompletedTasks()
-                     << endl;
-                cout << "Remaining task count: " << tasks.countTasks() << endl;
-
+                cout << "Reading list contains " << list.countBooks() << " book(s)." << endl;
+                list.markBookCheckedOut("Dune");
+                cout << "Dune marked as checked out." << endl;
                 break;
             }
 
             case 3: {
-                InventoryItem items[MAX_INVENTORY_ITEMS];
-                int count = InventoryReport::readInventoryFile(
-                    "data/inventory.txt",
-                    items,
-                    MAX_INVENTORY_ITEMS
-                );
-
-                cout << "Read " << count << " inventory item(s)." << endl;
-                cout << "Total inventory value: "
-                     << InventoryReport::calculateTotalInventoryValue(items, count)
-                     << endl;
-
-                if (InventoryReport::writeInventoryReport(
-                        "inventory_report.txt",
-                        items,
-                        count
-                    )) {
-                    cout << "Report written to inventory_report.txt" << endl;
-                }
-
+                Book books[MAX_BOOKS];
+                int count = CatalogReport::readCatalogFile("data/catalog.txt", books, MAX_BOOKS);
+                cout << "Loaded " << count << " book(s) from data/catalog.txt" << endl;
                 break;
             }
 
-            case 4:
-                cout << "Use this sample only as an example. "
-                     << "Delete or replace sample code before submission."
-                     << endl;
+            case 4: {
+                Book books[MAX_BOOKS];
+                int count = CatalogReport::readCatalogFile("data/catalog.txt", books, MAX_BOOKS);
+                if (count > 0) {
+                    CatalogReport::writeCatalogReport("catalog_report.txt", books, count);
+                    cout << "Catalog report written to catalog_report.txt" << endl;
+                }
                 break;
+            }
 
             case 0:
                 cout << "Goodbye!" << endl;

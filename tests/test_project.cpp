@@ -11,143 +11,123 @@ bool nearlyEqual(double actual, double expected, double tolerance = 0.0001) {
     return fabs(actual - expected) <= tolerance;
 }
 
-void createTestInventoryFile(string filename) {
+void createTestCatalogFile(string filename) {
     ofstream out(filename);
 
-    out << "A100 Apples 10 1.50" << endl;
-    out << "B200 Bread 5 3.25" << endl;
-    out << "C300 Cereal 8 4.75" << endl;
+    out << "Dune Herbert 1965 5 1" << endl;
+    out << "Frankenstein Shelley 1818 4 0" << endl;
+    out << "1984 Orwell 1949 5 1" << endl;
 
     out.close();
 }
 
 // Week 1: Program Basics
 void testWeek1ProgramBasics() {
-    ScoreList scores;
-    scores.addScore(80.0);
-    scores.addScore(90.0);
+    Book book("Dune", "Herbert", 1965, 5);
 
-    double average = scores.getAverage();
-
-    assert(nearlyEqual(average, 85.0));
-    assert(Student::determineLetterGrade(95.0) == 'A');
-    assert(Student::determineLetterGrade(65.0) == 'D');
+    assert(book.getTitle() == "Dune");
+    assert(book.getAuthor() == "Herbert");
+    assert(Book::isValidYear(1965));
+    assert(!Book::isValidYear(1800));
+    assert(Book::isValidRating(5));
+    assert(!Book::isValidRating(6));
 }
 
 // Week 2: Decisions and Loops
 void testWeek2DecisionsAndLoops() {
-    assert(ScoreList::isValidScore(0.0));
-    assert(ScoreList::isValidScore(100.0));
-    assert(!ScoreList::isValidScore(-1.0));
-    assert(!ScoreList::isValidScore(101.0));
+    assert(Book::isValidTitle("Dune"));
+    assert(!Book::isValidTitle(""));
+    assert(Book::isValidRating(1));
+    assert(!Book::isValidRating(0));
 
-    assert(Task::isValidPriority(1));
-    assert(Task::isValidPriority(5));
-    assert(!Task::isValidPriority(0));
-    assert(!Task::isValidPriority(6));
-
-    assert(isValidMenuChoice(0));
-    assert(isValidMenuChoice(4));
-    assert(!isValidMenuChoice(5));
+    BookShelf shelf;
+    assert(shelf.addBook(Book("Dune", "Herbert", 1965, 5)));
+    assert(shelf.addBook(Book("Frankenstein", "Shelley", 1818, 4)));
+    assert(shelf.addBook(Book("1984", "Orwell", 1949, 5)));
+    assert(shelf.getCount() == 3);
+    assert(!shelf.addBook(Book("", "Unknown", 2000, 3)));
 }
 
 // Week 3: Functions and Program Design
 void testWeek3FunctionsAndProgramDesign() {
-    ScoreList scores;
-    scores.addScore(70.0);
-    scores.addScore(80.0);
-    scores.addScore(90.0);
+    BookShelf shelf;
+    shelf.addBook(Book("Dune", "Herbert", 1965, 5));
+    shelf.addBook(Book("Frankenstein", "Shelley", 1818, 4));
+    shelf.addBook(Book("1984", "Orwell", 1949, 5));
 
-    assert(nearlyEqual(scores.getTotal(), 240.0));
-    assert(nearlyEqual(scores.getAverage(), 80.0));
-
-    Student student("A123", "Alex");
-    assert(student.getId() == "A123");
-    assert(student.getName() == "Alex");
+    assert(shelf.findBookByTitle("1984") == 2);
+    assert(shelf.findBookByTitle("Missing") == -1);
+    assert(nearlyEqual(CatalogReport::calculateAverageRating(shelf.getBooks(), shelf.getCount()), 4.6667));
 }
 
 // Week 4: Arrays, Searching, and Sorting
 void testWeek4ArraysSearchingSorting() {
-    ScoreList scores;
-    scores.addScore(88.0);
-    scores.addScore(72.5);
-    scores.addScore(100.0);
-    scores.addScore(91.0);
+    BookShelf shelf;
+    shelf.addBook(Book("Dune", "Herbert", 1965, 5));
+    shelf.addBook(Book("1984", "Orwell", 1949, 5));
+    shelf.addBook(Book("Frankenstein", "Shelley", 1818, 4));
 
-    assert(scores.findScore(100.0) == 2);
-    assert(scores.findScore(50.0) == -1);
+    shelf.sortByTitle();
 
-    scores.sortAscending();
-
-    assert(nearlyEqual(scores.getScoreAt(0), 72.5));
-    assert(nearlyEqual(scores.getScoreAt(1), 88.0));
-    assert(nearlyEqual(scores.getScoreAt(2), 91.0));
-    assert(nearlyEqual(scores.getScoreAt(3), 100.0));
+    assert(shelf.getBookAt(0).getTitle() == "1984");
+    assert(shelf.getBookAt(1).getTitle() == "Dune");
+    assert(shelf.getBookAt(2).getTitle() == "Frankenstein");
 }
 
 // Week 5: Strings and Structures
 void testWeek5StringsAndStructures() {
-    Student student("A123", "Alex");
+    Book book("Pride and Prejudice", "Austen", 1813, 4);
 
-    assert(Student::isValidId("A123"));
-    assert(!Student::isValidId("a123"));
-    assert(student.getId() == "A123");
-    assert(student.getName() == "Alex");
+    assert(book.getTitle() == "Pride and Prejudice");
+    assert(book.getAuthor() == "Austen");
+    assert(book.isAvailable());
 
-    InventoryItem item = {"B200", "Bread", 5, 3.25};
-    assert(item.sku == "B200");
-    assert(item.name == "Bread");
-    assert(item.quantity == 5);
+    book.markCheckedOut();
+    assert(!book.isAvailable());
+
+    book.markReturned();
+    assert(book.isAvailable());
 }
 
-// Week 6: Simple Linked Task List
-void testWeek6SimpleLinkedTaskList() {
-    TaskList tasks;
+// Week 6: Pointers, Dynamic Memory, and Linked Lists
+void testWeek6LinkedLists() {
+    ReadingList books;
 
-    tasks.insertFront(Task("homework", 3));
-    tasks.insertFront(Task("study", 5));
-    tasks.insertFront(Task("project", 4));
+    books.insertFront(Book("Dune", "Herbert", 1965, 5));
+    books.insertFront(Book("1984", "Orwell", 1949, 5));
 
-    assert(tasks.countTasks() == 3);
-    assert(tasks.findTask("study") != nullptr);
-    assert(tasks.findTask("missing") == nullptr);
+    assert(books.countBooks() == 2);
+    assert(books.findBook("1984") != nullptr);
+    assert(books.findBook("Missing") == nullptr);
 
-    assert(tasks.markTaskComplete("homework"));
-    assert(tasks.markTaskComplete("project"));
+    assert(books.markBookCheckedOut("Dune"));
+    assert(books.removeBookByTitle("1984"));
+    assert(books.countBooks() == 1);
+    assert(books.findBook("1984") == nullptr);
 
-    int removed = tasks.removeCompletedTasks();
-
-    assert(removed == 2);
-    assert(tasks.countTasks() == 1);
-    assert(tasks.findTask("study") != nullptr);
-    assert(tasks.findTask("homework") == nullptr);
-
-    tasks.clear();
-    assert(tasks.isEmpty());
+    books.clear();
+    assert(books.isEmpty());
 }
 
-// Week 7: File-Based Inventory Report
-void testWeek7FileBasedInventoryReport() {
-    string inputFilename = "tests/resources/test_inventory_input.txt";
-    string outputFilename = "tests/resources/test_inventory_report_output.txt";
+// Week 7: File I/O and Integration
+void testWeek7FileIO() {
+    string inputFilename = "tests/resources/test_catalog_input.txt";
+    string outputFilename = "tests/resources/test_catalog_report_output.txt";
 
-    createTestInventoryFile(inputFilename);
+    createTestCatalogFile(inputFilename);
 
-    InventoryItem items[10];
-    int count = InventoryReport::readInventoryFile(inputFilename, items, 10);
+    Book books[10];
+    int count = CatalogReport::readCatalogFile(inputFilename, books, 10);
 
     assert(count == 3);
-    assert(items[0].sku == "A100");
-    assert(items[2].name == "Cereal");
+    assert(books[0].getTitle() == "Dune");
+    assert(books[1].getTitle() == "Frankenstein");
+    assert(nearlyEqual(CatalogReport::calculateAverageRating(books, count), 4.6667));
+    assert(CatalogReport::findBookByTitle(books, count, "Dune") == 0);
+    assert(CatalogReport::findBookByTitle(books, count, "Missing") == -1);
+    assert(CatalogReport::findHighestRatedBookIndex(books, count) == 0);
 
-    assert(nearlyEqual(InventoryReport::calculateItemValue(items[0]), 15.0));
-    assert(nearlyEqual(InventoryReport::calculateTotalInventoryValue(items, count), 69.25));
-
-    assert(InventoryReport::findItemBySku(items, count, "B200") == 1);
-    assert(InventoryReport::findItemBySku(items, count, "Z999") == -1);
-    assert(InventoryReport::findHighestValueItemIndex(items, count) == 2);
-
-    bool wroteReport = InventoryReport::writeInventoryReport(outputFilename, items, count);
+    bool wroteReport = CatalogReport::writeCatalogReport(outputFilename, books, count);
     assert(wroteReport);
 
     ifstream in(outputFilename);
@@ -155,14 +135,13 @@ void testWeek7FileBasedInventoryReport() {
 
     string contents;
     string line;
-
     while (getline(in, line)) {
         contents += line + "\n";
     }
 
-    assert(contents.find("Inventory Report") != string::npos);
-    assert(contents.find("A100") != string::npos);
-    assert(contents.find("Total inventory value") != string::npos);
+    assert(contents.find("Catalog Report") != string::npos);
+    assert(contents.find("Dune") != string::npos);
+    assert(contents.find("available") != string::npos);
 }
 
 int main() {
@@ -171,9 +150,9 @@ int main() {
     testWeek3FunctionsAndProgramDesign();
     testWeek4ArraysSearchingSorting();
     testWeek5StringsAndStructures();
-    testWeek6SimpleLinkedTaskList();
-    testWeek7FileBasedInventoryReport();
+    testWeek6LinkedLists();
+    testWeek7FileIO();
 
-    cout << "All corrected final project template tests passed!" << endl;
+    cout << "All library tracker tests passed!" << endl;
     return 0;
 }

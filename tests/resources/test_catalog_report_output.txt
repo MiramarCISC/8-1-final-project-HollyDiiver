@@ -1,0 +1,6 @@
+Catalog Report
+Title Author Year Rating Status
+Dune Herbert 1965 5 available
+Frankenstein Shelley 2000 4 checked out
+1984 Orwell 1949 5 available
+Average rating: 4.67

@@ -3,127 +3,90 @@
 
 #include <string>
 
-const double A_MINIMUM = 90.0;
-const double B_MINIMUM = 80.0;
-const double C_MINIMUM = 70.0;
-const double D_MINIMUM = 60.0;
-const int MAX_INVENTORY_ITEMS = 100;
+const int MAX_BOOKS = 10;
 
-// SAMPLE CODE ONLY:
-// These classes demonstrate course concepts using sample project nouns.
-// Delete or replace these sample classes before final submission.
-
-class ScoreList {
+class Book {
 private:
-    double scores[10];
+    std::string title;
+    std::string author;
+    int publicationYear;
+    int rating;
+    bool available;
+
+public:
+    Book();
+    Book(std::string bookTitle, std::string bookAuthor, int year, int bookRating);
+
+    std::string getTitle() const;
+    std::string getAuthor() const;
+    int getPublicationYear() const;
+    int getRating() const;
+    bool isAvailable() const;
+
+    void markCheckedOut();
+    void markReturned();
+
+    static bool isValidYear(int year);
+    static bool isValidRating(int rating);
+    static bool isValidTitle(const std::string& title);
+};
+
+class BookShelf {
+private:
+    Book books[MAX_BOOKS];
     int count;
 
 public:
-    ScoreList();
+    BookShelf();
 
-    bool addScore(double score);
+    bool addBook(const Book& book);
     int getCount() const;
-    double getScoreAt(int index) const;
-
-    double getTotal() const;
-    double getAverage() const;
-    int findScore(double target) const;
-    void sortAscending();
-
-    static bool isValidScore(double score);
+    Book getBookAt(int index) const;
+    Book* getBooks();
+    const Book* getBooks() const;
+    int findBookByTitle(const std::string& title) const;
+    void sortByTitle();
 };
 
-class Student {
+class BookNode {
+public:
+    Book data;
+    BookNode* next;
+
+    explicit BookNode(const Book& book);
+};
+
+class ReadingList {
 private:
-    std::string id;
-    std::string name;
-    ScoreList scoreList;
+    BookNode* head;
 
 public:
-    Student();
-    Student(std::string studentId, std::string studentName);
+    ReadingList();
+    ReadingList(const ReadingList& other) = delete;
+    ReadingList& operator=(const ReadingList& other) = delete;
+    ~ReadingList();
 
-    std::string getId() const;
-    std::string getName() const;
-    ScoreList& getScoreList();
-    const ScoreList& getScoreList() const;
-
-    double getAverage() const;
-    char getLetterGrade() const;
-
-    static bool isValidId(std::string id);
-    static char determineLetterGrade(double average);
-};
-
-class Task {
-private:
-    std::string description;
-    int priority;
-    bool completed;
-
-public:
-    Task();
-    Task(std::string taskDescription, int taskPriority);
-
-    std::string getDescription() const;
-    int getPriority() const;
-    bool isCompleted() const;
-    void markComplete();
-
-    static bool isValidPriority(int priority);
-};
-
-class TaskNode {
-public:
-    Task data;
-    TaskNode* next;
-
-    TaskNode(Task task);
-};
-
-class TaskList {
-private:
-    TaskNode* head;
-
-public:
-    TaskList();
-    TaskList(const TaskList& other) = delete;
-    TaskList& operator=(const TaskList& other) = delete;
-    ~TaskList();
-
-    void insertFront(Task task);
-    int countTasks() const;
-    TaskNode* findTask(std::string description);
-    const TaskNode* findTask(std::string description) const;
-    bool markTaskComplete(std::string description);
-    int removeCompletedTasks();
+    void insertFront(const Book& book);
+    int countBooks() const;
+    BookNode* findBook(const std::string& title);
+    const BookNode* findBook(const std::string& title) const;
+    bool markBookCheckedOut(const std::string& title);
+    bool removeBookByTitle(const std::string& title);
     void clear();
     bool isEmpty() const;
 };
 
-struct InventoryItem {
-    std::string sku;
-    std::string name;
-    int quantity;
-    double price;
-};
-
-class InventoryReport {
+class CatalogReport {
 public:
-    static bool isValidQuantity(int quantity);
-    static bool isValidPrice(double price);
-    static double calculateItemValue(const InventoryItem& item);
-
-    static int readInventoryFile(std::string filename, InventoryItem items[], int maxItems);
-    static bool writeInventoryReport(std::string filename, const InventoryItem items[], int count);
-
-    static double calculateTotalInventoryValue(const InventoryItem items[], int count);
-    static int findItemBySku(const InventoryItem items[], int count, std::string sku);
-    static int findHighestValueItemIndex(const InventoryItem items[], int count);
+    static double calculateAverageRating(const Book books[], int count);
+    static int readCatalogFile(const std::string& filename, Book books[], int maxItems);
+    static bool writeCatalogReport(const std::string& filename, const Book books[], int count);
+    static int findBookByTitle(const Book books[], int count, const std::string& title);
+    static int findHighestRatedBookIndex(const Book books[], int count);
 };
 
 bool isValidMenuChoice(int choice);
 void printMenu();
-void printStudent(const Student& student);
+void printBook(const Book& book);
 
 #endif
