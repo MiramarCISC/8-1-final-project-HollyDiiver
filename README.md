@@ -1,52 +1,8 @@
-# CISC 192 Final Project Template
+# Library Tracker
 
 ## Overview
 
-This repository contains a fully working sample project that demonstrates the course skills from Weeks 1–7.
-
-The sample code is provided only as an example. It is **not intended to be submitted unchanged**.
-
-## Important Student Instructions
-
-Before submitting your own final project, delete the sample project code and replace it with your own open-ended project.
-
-The sample code demonstrates patterns you may reuse:
-
-- Classes named as nouns from the project
-- Header/source separation
-- Unit tests
-- Arrays, searching, and sorting
-- Strings and structures/classes
-- A simple linked task list
-- A file-based inventory report
-- Test resource files stored in `tests/resources/`
-
-Do not submit the unchanged sample project as your final project.
-
-## Correct Course Topics
-
-Your final project is worth **7 points total**.
-
-Each topic is worth **1 point**:
-
-- **0.5 points** for integrating the topic into reachable project code
-- **0.5 points** for at least one unit test for that topic
-
-The seven required topics are:
-
-1. Week 1 Program Basics
-2. Week 2 Decisions and Loops
-3. Week 3 Functions and Program Design
-4. Week 4 Arrays, Searching, and Sorting
-5. Week 5 Strings and Structures
-6. Week 6 Pointers, Dynamic Memory, and Linked Lists
-7. Week 7 File I/O and Integration
-
-## Unreachable Code Rule
-
-Separate unreachable code is not acceptable.
-
-A topic only earns credit if it is part of your working project and can be reached through normal program execution, another project function/method, or an automated unit test.
+This project is a small library-tracking application that lets a user manage a collection of books, sort them, track which titles are checked out, and save a catalog report to a file. The implementation uses the course topics from Weeks 1–7 in reachable code and is tested with unit tests.
 
 ## Build and Run
 
@@ -61,77 +17,39 @@ make
 make test
 ```
 
-## Clean Build Files
-
-```bash
-make clean
-```
-
-## Object-Oriented Sample Design
-
-This sample uses noun-based classes from the sample project:
-
-| Class | Purpose |
-|---|---|
-| `ScoreList` | Demonstrates arrays, searching, sorting, and arithmetic |
-| `Student` | Demonstrates strings and custom record/class design |
-| `Task` | Demonstrates a task record |
-| `TaskNode` | Demonstrates linked list nodes |
-| `TaskList` | Demonstrates a simple linked task list |
-| `InventoryItem` | Demonstrates inventory records |
-| `InventoryReport` | Demonstrates file-based inventory reporting |
-
-## Sample Code Is Example Only
-
-The sample code in this repository should be deleted or replaced before final submission.
-
-Students may keep the project structure, Makefile, GitHub Actions workflow, and testing pattern, but the submitted project should reflect the student's own project idea.
-
-## Required README Update
-
-Before submitting your final project, update this README.md so it describes your own project.
-
-```text
 ## Course Topics Integrated and Tested
 
 1. Week 1 Program Basics
-   - Code location:
-   - Test location:
+   - Code location: [src/project.cpp](src/project.cpp)
+   - Test location: [tests/test_project.cpp](tests/test_project.cpp)
 
 2. Week 2 Decisions and Loops
-   - Code location:
-   - Test location:
+   - Code location: [src/project.cpp](src/project.cpp)
+   - Test location: [tests/test_project.cpp](tests/test_project.cpp)
 
 3. Week 3 Functions and Program Design
-   - Code location:
-   - Test location:
+   - Code location: [src/project.cpp](src/project.cpp)
+   - Test location: [tests/test_project.cpp](tests/test_project.cpp)
 
 4. Week 4 Arrays, Searching, and Sorting
-   - Code location:
-   - Test location:
+   - Code location: [src/project.cpp](src/project.cpp)
+   - Test location: [tests/test_project.cpp](tests/test_project.cpp)
 
 5. Week 5 Strings and Structures
-   - Code location:
-   - Test location:
+   - Code location: [src/project.cpp](src/project.cpp)
+   - Test location: [tests/test_project.cpp](tests/test_project.cpp)
 
 6. Week 6 Pointers, Dynamic Memory, and Linked Lists
-   - Code location:
-   - Test location:
+   - Code location: [src/project.cpp](src/project.cpp)
+   - Test location: [tests/test_project.cpp](tests/test_project.cpp)
 
 7. Week 7 File I/O and Integration
-   - Code location:
-   - Test location:
-```
+   - Code location: [src/project.cpp](src/project.cpp)
+   - Test location: [tests/test_project.cpp](tests/test_project.cpp)
 
-## Final Submission Checklist
+## Project Structure
 
-- [ ] My project compiles with `make`.
-- [ ] My project runs with `./main`.
-- [ ] My tests run with `make test`.
-- [ ] I deleted or replaced the sample project code.
-- [ ] My project uses class names that are nouns from my own project.
-- [ ] My project integrates all 7 course topics in reachable code.
-- [ ] My project includes at least one unit test per course topic.
-- [ ] My README explains where each topic appears.
-- [ ] My README explains which test verifies each topic.
-- [ ] My code is committed and pushed to GitHub Classroom.
+- [include/project.hpp](include/project.hpp): class declarations for the book tracker
+- [src/project.cpp](src/project.cpp): implementation of the tracker logic
+- [src/main.cpp](src/main.cpp): interactive demo menu
+- [tests/test_project.cpp](tests/test_project.cpp): unit tests for each topic
