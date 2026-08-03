@@ -1,6 +1,7 @@
 Catalog Report
 Title Author Year Rating Status
-Dune Herbert 1965 5 available
-Frankenstein Shelley 2000 4 checked out
-1984 Orwell 1949 5 available
-Average rating: 4.67
+Blood Meridian Cormac McCarthy 1965 5 available
+The Road Cormac McCarthy 2006 5 checked out
+The Daily Stoic Ryan Holiday 2016 4 available
+Call Of Cthulu H.P. Lovecraft 1928 4 checked out
+Average rating: 4.50

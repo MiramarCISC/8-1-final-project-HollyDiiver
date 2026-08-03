@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 using namespace std;
@@ -268,13 +269,49 @@ int CatalogReport::readCatalogFile(const string& filename, Book books[], int max
     }
 
     int count = 0;
-    string title;
-    string author;
-    int year = 0;
-    int rating = 0;
-    int availableFlag = 0;
 
-    while (count < maxItems && in >> title >> author >> year >> rating >> availableFlag) {
+    while (count < maxItems) {
+        string line;
+        if (!getline(in, line)) {
+            break;
+        }
+
+        if (line.empty()) {
+            continue;
+        }
+
+        string title;
+        string author;
+        int year = 0;
+        int rating = 0;
+        int availableFlag = 0;
+
+        stringstream lineStream(line);
+        string titleField;
+        string authorField;
+        string yearField;
+        string ratingField;
+        string availableField;
+
+        getline(lineStream, titleField, '|');
+        getline(lineStream, authorField, '|');
+        getline(lineStream, yearField, '|');
+        getline(lineStream, ratingField, '|');
+        getline(lineStream, availableField, '|');
+
+        if (!titleField.empty() && !authorField.empty() && !yearField.empty() && !ratingField.empty() && !availableField.empty()) {
+            title = titleField;
+            author = authorField;
+            year = stoi(yearField);
+            rating = stoi(ratingField);
+            availableFlag = stoi(availableField);
+        } else {
+            stringstream fallbackStream(line);
+            if (!(fallbackStream >> title >> author >> year >> rating >> availableFlag)) {
+                continue;
+            }
+        }
+
         Book book(title, author, year, rating);
         if (availableFlag == 1) {
             book.markReturned();

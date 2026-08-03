@@ -1,3 +1,4 @@
-Dune Herbert 1965 5 1
-Frankenstein Shelley 1818 4 0
-1984 Orwell 1949 5 1
+Blood Meridian|Cormac McCarthy|1965|5|1
+The Road|Cormac McCarthy|2006|5|0
+The Daily Stoic|Ryan Holiday|2016|4|1
+Call Of Cthulu|H.P. Lovecraft|1928|4|0

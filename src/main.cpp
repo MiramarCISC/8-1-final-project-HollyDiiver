@@ -22,9 +22,10 @@ int main() {
         switch (choice) {
             case 1: {
                 BookShelf shelf;
-                shelf.addBook(Book("Dune", "Herbert", 1965, 5));
-                shelf.addBook(Book("1984", "Orwell", 1949, 5));
-                shelf.addBook(Book("Frankenstein", "Shelley", 1818, 4));
+                shelf.addBook(Book("Blood Meridian", "Cormac McCarthy", 1965, 5));
+                shelf.addBook(Book("The Road", "Cormac McCarthy", 2006, 5));
+                shelf.addBook(Book("The Daily Stoic", "Ryan Holiday", 2016, 4));
+                shelf.addBook(Book("Call Of Cthulu", "H.P. Lovecraft", 1928, 4));
 
                 cout << "Sample shelf contents:" << endl;
                 for (int i = 0; i < shelf.getCount(); i++) {
@@ -35,12 +36,12 @@ int main() {
 
             case 2: {
                 ReadingList list;
-                list.insertFront(Book("Dune", "Herbert", 1965, 5));
-                list.insertFront(Book("1984", "Orwell", 1949, 5));
+                list.insertFront(Book("Blood Meridian", "Cormac McCarthy", 1965, 5));
+                list.insertFront(Book("The Road", "Cormac McCarthy", 2006, 5));
 
                 cout << "Reading list contains " << list.countBooks() << " book(s)." << endl;
-                list.markBookCheckedOut("Dune");
-                cout << "Dune marked as checked out." << endl;
+                list.markBookCheckedOut("Blood Meridian");
+                cout << "Blood Meridian marked as checked out." << endl;
                 break;
             }
 
